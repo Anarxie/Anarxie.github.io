@@ -31,9 +31,11 @@
 </table>
 
 <script>
+let url = new URL(window.location.href);
+var token = url.searchParams.get('token');
 $.ajax({
     method: 'GET',
-    url: 'https://graph.facebook.com/v15.0/act_747282386362589/insights?time_range={since%3A%272022-11-01%27%2Cuntil%3A%272022-11-30%27}&time_increment=1&level=campaign&fields=campaign_name%2Cspend%2Cactions&limit=2&access_token=EAAFZB9xhHpB8BAGczUJlunNAhclJenyfmuOoHHbksOBZBZAxWzJzrxlsrsWwHmxqpl8ZA6h8eDCPB4F6DaQPDIBaiqsn6mZAGQRFwlJVDTjjkb7hGdFpZAQ3SjsD72MCt7hj921w0SzzrczRiUs2q377iQRdm0YNuSkVqbm8GpLXqYG9mWQikHgSe4WKiqZAIYZD',
+    url: 'https://graph.facebook.com/v15.0/act_747282386362589/insights?time_range={since%3A%272022-11-01%27%2Cuntil%3A%272022-11-30%27}&time_increment=1&level=campaign&fields=campaign_name%2Cspend%2Cactions&limit=5000&access_token=' + token,
     success: function(graph) {
         let response = graph;
         const result = {
