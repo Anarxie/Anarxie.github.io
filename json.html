@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>JavaScript - read JSON from URL</title>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+</head>
+
+<body>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<style>
+    th{ 
+        color:#fff;
+            }
+</style>
+
+
+<table class="table table-striped">
+    <tr  class="bg-info">
+	    <th>Tanggal</th>
+        <th>Kampanye</th>
+        <th>Spend</th>
+        <th>lead</th>
+    </tr>
+
+    <tbody id="myTable">
+        
+    </tbody>
+</table>
+
+<script>
+$.ajax({
+    method: 'GET',
+    url: 'https://graph.facebook.com/v15.0/act_747282386362589/insights?time_range={since%3A%272022-11-01%27%2Cuntil%3A%272022-11-30%27}&time_increment=1&level=campaign&fields=campaign_name%2Cspend%2Cactions&limit=5000&access_token=EAAFZB9xhHpB8BAPONeBYKNA62QPesDGcgg4oqGBPyX1myWZB9HMTFCxLCHqwRZBfm6jZAJVSY2OzJ5786rYutsd299THrqqqire6CBEfKltxl88HzvTRDccGYRONQ5bm3RzQnMyXwYqrMpIZBwwlLD8LEmh2JeOrzMWghkbem8T7EgDVtas8lvfujdYRNfMgZD',
+    success: function(graph) {
+        let response = graph;
+        const result = {
+            data: response.data.map(({
+                actions,
+                ...rest
+            }) => ({
+                ...rest,
+                ...Object.fromEntries(actions.map(({
+                    action_type,
+                    value
+                }) => [action_type, value]))
+            }))
+        };
+        buildTable(result.data)
+        console.log(result.data);
+    }
+});
+
+function buildTable(data) {
+    var table = document.getElementById('myTable')
+
+    for (var i = 0; i < data.length; i++) {
+        var row = `<tr>
+			                <td>${data[i].date_start}</td>
+							<td>${data[i].campaign_name}</td>
+							<td>${data[i].spend}</td>
+							<td>${data[i].lead}</td>
+					  </tr>`
+        table.innerHTML += row
+
+
+    }
+};
+</script>
+
+</body>
+</html>
