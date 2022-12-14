@@ -1,4 +1,4 @@
-        var WilayahIndonesia = "https://ibnux.github.io/data-indonesia/";
+        var WilayahIndonesia = "https://www.haidarax.me/Wilayah-Indonesia/";
 
         function clearOptions(id) {
           //  console.log("on clearOptions :" + id);
@@ -18,8 +18,8 @@
 
             data = [{
                 id: "",
-                nama: "- Pilih Provinsi -",
-                text: "- Pilih Provinsi -"
+                nama: "Pilih Provinsi",
+                text: "Pilih Provinsi"
             }].concat(res);
 
             console.log(data);
@@ -53,8 +53,8 @@
 
                     data = [{
                         id: "",
-                        nama: "- Pilih Kabupaten -",
-                        text: "- Pilih Kabupaten -"
+                        nama: "Pilih Kabupaten",
+                        text: "Pilih Kabupaten"
                     }].concat(res);
 
                     //implemen data ke select kabupaten
@@ -88,13 +88,13 @@
 
                     data = [{
                         id: "",
-                        nama: "- Pilih Kecamatan -",
-                        text: "- Pilih Kecamatan -"
+                        nama: "Pilih Kecamatan",
+                        text: "Pilih Kecamatan"
                     }].concat(res);
 
                     //implemen data ke select Kecamatan
                     $("#select2-kecamatan").select2({
-                        placeholder: "- Pilih Kecamatan -",
+                        placeholder: "Pilih Kecamatan",
                         dropdownAutoWidth: true,
                         width: '100%',
                         data: data
