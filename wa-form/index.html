@@ -129,7 +129,7 @@ if ($("#NAMA_LENGKAP").prop("value") && $("#select2-kelurahan :selected").prop("
                 body: new FormData(form)
             })
             .then(response => {
-                $("#form_alerts").html("<div class='alert alert-success'>Data berhasil dikirim.</div>")
+                $(".container").html("<div class='alert alert-success'>Data berhasil dikirim.</div>")
             })
             .catch(error => {
                 $("#form_alerts").html("<div class='alert alert-danger'>Data gagal terkirim!.</div>")
