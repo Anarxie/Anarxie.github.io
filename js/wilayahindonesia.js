@@ -1,5 +1,9 @@
         var WilayahIndonesia = "https://www.haidarax.me/Wilayah-Indonesia/";
 
+        function idasli(id, daftar) {
+            return daftar.find(data => data.id === id)?.nama ?? null;
+          }
+
         function clearOptions(id) {
           //  console.log("on clearOptions :" + id);
 
@@ -13,22 +17,24 @@
 
             res = $.map(res, function (obj) {
                 obj.text = obj.nama
+                obj.nama = obj.id
+                obj.id = obj.text
                 return obj;
             });
 
-            data = [{
+            dataprov = [{
                 id: "",
                 nama: "Pilih Provinsi",
                 text: "Pilih Provinsi"
             }].concat(res);
 
-            console.log(data);
+            console.log(dataprov);
 
             //implemen data ke select provinsi
             $("#select2-provinsi").select2({
                 dropdownAutoWidth: true,
                 width: '100%',
-                data: data
+                data: dataprov
             })
         });
 
@@ -36,7 +42,6 @@
         $(selectProv).change(function () {
             var value = $(selectProv).val();
             clearOptions('select2-kabupaten');
-
             if (value) {
                 console.log("on change selectProv");
 
@@ -44,14 +49,16 @@
                 console.log("value = " + value + " / " + "text = " + text);
 
                 console.log('Load Kabupaten di '+text+'...')
-                $.getJSON(WilayahIndonesia + "kabupaten/" + value + ".json", function(res) {
+                $.getJSON(WilayahIndonesia + "kabupaten/" + idasli(value, dataprov) + ".json", function(res) {
 
                     res = $.map(res, function (obj) {
                         obj.text = obj.nama
+                        obj.nama = obj.id
+                        obj.id = obj.text
                         return obj;
                     });
 
-                    data = [{
+                    datakab = [{
                         id: "",
                         nama: "Pilih Kabupaten",
                         text: "Pilih Kabupaten"
@@ -61,7 +68,7 @@
                     $("#select2-kabupaten").select2({
                         dropdownAutoWidth: true,
                         width: '100%',
-                        data: data
+                        data: datakab
                     })
                 })
             }
@@ -79,14 +86,16 @@
                 console.log("value = " + value + " / " + "text = " + text);
 
                 console.log('Load Kecamatan di '+text+'...')
-                $.getJSON(WilayahIndonesia + "kecamatan/" + value + ".json", function(res) {
+                $.getJSON(WilayahIndonesia + "kecamatan/" + idasli(value, datakab) + ".json", function(res) {
 
                     res = $.map(res, function (obj) {
                         obj.text = obj.nama
+                        obj.nama = obj.id
+                        obj.id = obj.text
                         return obj;
                     });
 
-                    data = [{
+                    datakec = [{
                         id: "",
                         nama: "Pilih Kecamatan",
                         text: "Pilih Kecamatan"
@@ -97,7 +106,7 @@
                         placeholder: "Pilih Kecamatan",
                         dropdownAutoWidth: true,
                         width: '100%',
-                        data: data
+                        data: datakec
                     })
                 })
             }
@@ -115,14 +124,16 @@
                 console.log("value = " + value + " / " + "text = " + text);
 
                 console.log('Load Kelurahan di '+text+'...')
-                $.getJSON(WilayahIndonesia + "kelurahan/" + value + ".json", function(res) {
+                $.getJSON(WilayahIndonesia + "kelurahan/" + idasli(value, datakec) + ".json", function(res) {
 
                     res = $.map(res, function (obj) {
                         obj.text = obj.nama
+                        obj.nama = obj.id
+                        obj.id = obj.text
                         return obj;
                     });
 
-                    data = [{
+                    datakel = [{
                         id: "",
                         nama: "- Pilih Kelurahan -",
                         text: "- Pilih Kelurahan -"
@@ -130,10 +141,10 @@
 
                     //implemen data ke select Kelurahan
                     $("#select2-kelurahan").select2({
-                        placeholder: "- Pilih Kelurahan -",
+                        placeholder: "Pilih Kelurahan",
                         dropdownAutoWidth: true,
                         width: '100%',
-                        data: data
+                        data: datakel
                     })
                 })
             }
