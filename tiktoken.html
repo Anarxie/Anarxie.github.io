@@ -10,7 +10,7 @@
         const autCode = urlParams.get('aut_code');
 
         if (autCode) {
-            fetch(`https://script.google.com/macros/s/AKfycbzO5HADx7w3hTbA-g0_qJnRReL3PUfooOoOpKNNGJ0CnAp4gCiIiFAzolR7hWdeG9UL/exec?aut_code=${autCode}`)
+            fetch(`https://script.google.com/macros/s/AKfycbzO5HADx7w3hTbA-g0_qJnRReL3PUfooOoOpKNNGJ0CnAp4gCiIiFAzolR7hWdeG9UL/exec?app=Haidarax&aut_code=${autCode}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -31,6 +31,6 @@
 </script>
 </head>
 <body onload="fetchData()">
-    <div id="response"></div>
+    <div id="response">loading</div>
 </body>
 </html>
