@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fetch Data dari URL Parameter</title>
+<script>
+    function fetchData() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const autCode = urlParams.get('aut_code');
+
+        if (autCode) {
+            fetch(`https://script.google.com/macros/s/AKfycbzO5HADx7w3hTbA-g0_qJnRReL3PUfooOoOpKNNGJ0CnAp4gCiIiFAzolR7hWdeG9UL/exec?aut_code=${autCode}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Menggunakan data yang diterima dari server
+                    document.getElementById('response').textContent = JSON.stringify(data);
+                })
+                .catch(error => {
+                    console.error('There was a problem with the fetch operation:', error);
+                });
+        } else {
+            console.error('Parameter aut_code not found in URL.');
+        }
+    }
+</script>
+</head>
+<body onload="fetchData()">
+    <div id="response"></div>
+</body>
+</html>
