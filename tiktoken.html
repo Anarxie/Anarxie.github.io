@@ -7,31 +7,38 @@
 <script>
     function fetchData() {
         const urlParams = new URLSearchParams(window.location.search);
+        const autCode = urlParams.get('auth_code');
         const code = urlParams.get('code');
 
-        if (code) {
-            fetch(`https://script.google.com/macros/s/AKfycbzO5HADx7w3hTbA-g0_qJnRReL3PUfooOoOpKNNGJ0CnAp4gCiIiFAzolR7hWdeG9UL/exec?app=Haidarax&code=${code}`)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // Menggunakan data yang diterima dari server
-                    document.getElementById('response').textContent = JSON.stringify(data);
-                })
-                .catch(error => {
-                    console.error('There was a problem with the fetch operation:', error);
-                });
+        const parameter = autCode ? 'auth_code' : code ? 'code' : null;
+        if (parameter) {
+            fetchDataWithParameter(parameter, urlParams.get(parameter));
         } else {
-            console.error('Parameter code not found in URL.');
-            document.getElementById('response').textContent = 'Parameter code not found in URL.';
+            console.error('Parameters auth_code and code not found in URL.');
+            document.getElementById('response').textContent = 'Parameters auth_code and code not found in URL.';
         }
     }
+
+    function fetchDataWithParameter(parameter, value) {
+        fetch(`https://script.google.com/macros/s/AKfycbx-bANHyLUm81gd0SXevhZNO3cqiP6e1VMJhj3bX3UfroZNtHADknbkUP8ECPHFzyZC/exec?app=Haidarax&${parameter}=${value}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('response').textContent = JSON.stringify(data);
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    }
+
+    window.onload = fetchData;
 </script>
 </head>
-<body onload="fetchData()">
+<body>
     <div id="response">loading</div>
 </body>
 </html>
